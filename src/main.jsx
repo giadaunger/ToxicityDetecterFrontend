@@ -3,7 +3,22 @@ import React, { useState } from "react";
 import "./index.css";
 
 function App() {
-  const [activeTab, setActiveTab] = useState("reddit");
+  const [activeTab, setActiveTab] = useState("link");
+  const [inputLinkValue, setInputLinkValue] = useState("");
+
+  // Function to detect platform based on the URL
+  const detectPlatform = (link) => {
+    if (link.includes("reddit.com")) {
+      return "Reddit";
+    } else if (link.includes("twitter.com")) {
+      return "Twitter";
+    }
+    return "Unknown platform";
+  };
+
+  const handleInputChange = (e) => {
+    setInputLinkValue(e.target.value);
+  };
 
   return (
     <div>
@@ -15,10 +30,9 @@ function App() {
         <p className="text-xl">
           ToxiGuard is an AI-powered tool designed to analyze comments and
           threads from platforms like Reddit and Twitter to detect toxic
-          content. Simply paste a link to a thread from Reddit or Twitter, or
-          enter a comment in the textbox, and ToxiGuard will identify harmful
-          language and explain why it's toxic—helping you foster safer online
-          spaces.
+          content. Simply paste a link or a comment in the textbox, and
+          ToxiGuard will identify harmful language and explain why it's
+          toxic—helping you foster safer online spaces.
         </p>
       </div>
       <div className="max-w-lg mx-auto mt-10">
@@ -26,23 +40,13 @@ function App() {
         <div className="flex border-b border-gray-300">
           <button
             className={`flex-1 py-2 text-center ${
-              activeTab === "reddit"
+              activeTab === "link"
                 ? "border-b-4 border-blue-500 text-blue-500"
                 : "text-gray-600"
             }`}
-            onClick={() => setActiveTab("reddit")}
+            onClick={() => setActiveTab("link")}
           >
-            Reddit
-          </button>
-          <button
-            className={`flex-1 py-2 text-center ${
-              activeTab === "twitter"
-                ? "border-b-4 border-blue-500 text-blue-500"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveTab("twitter")}
-          >
-            Twitter
+            Link
           </button>
           <button
             className={`flex-1 py-2 text-center ${
@@ -58,17 +62,20 @@ function App() {
 
         {/* Content Area */}
         <div className="p-4">
-          {activeTab === "reddit" && (
-            <textarea
-              className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Paste a Reddit link here"
-            />
-          )}
-          {activeTab === "twitter" && (
-            <textarea
-              className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Paste a Twitter link here"
-            />
+          {activeTab === "link" && (
+            <div>
+              <textarea
+                className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Paste a Reddit or Twitter link here"
+                value={inputLinkValue}
+                onChange={handleInputChange}
+              />
+              {inputLinkValue && (
+                <p className="mt-2 text-sm text-gray-500">
+                  Detected platform: {detectPlatform(inputLinkValue)}
+                </p>
+              )}
+            </div>
           )}
           {activeTab === "comment" && (
             <textarea
