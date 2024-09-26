@@ -5,19 +5,33 @@ import "./index.css";
 function App() {
   const [activeTab, setActiveTab] = useState("link");
   const [inputLinkValue, setInputLinkValue] = useState("");
+  const [platform, setPlatform] = useState("");
+  const [unknownPlatform, setUnknownPlatform] = useState("");
 
-  // Function to detect platform based on the URL
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
       return "Reddit";
     } else if (link.includes("twitter.com")) {
       return "Twitter";
+    } else {
+      return null;
     }
-    return "Unknown platform";
   };
 
   const handleInputChange = (e) => {
-    setInputLinkValue(e.target.value);
+    const link = e.target.value;
+    setInputLinkValue(link);
+
+    const detectedPlatform = detectPlatform(link);
+    if (detectedPlatform) {
+      setPlatform(detectedPlatform);
+      setUnknownPlatform("");
+    } else {
+      setPlatform("");
+      setUnknownPlatform(
+        "Can only accept links from Reddit or Twitter threads!"
+      );
+    }
   };
 
   return (
@@ -70,10 +84,13 @@ function App() {
                 value={inputLinkValue}
                 onChange={handleInputChange}
               />
-              {inputLinkValue && (
+              {inputLinkValue && platform && (
                 <p className="mt-2 text-sm text-gray-500">
-                  Detected platform: {detectPlatform(inputLinkValue)}
+                  Detected platform: {platform}
                 </p>
+              )}
+              {unknownPlatform && (
+                <p className="mt-2 text-sm text-red-500">{unknownPlatform}</p>
               )}
             </div>
           )}
