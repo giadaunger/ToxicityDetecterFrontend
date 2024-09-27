@@ -8,6 +8,7 @@ function App() {
   const [inputComment, setInputComment] = useState("");
   const [platform, setPlatform] = useState("");
   const [unknownPlatform, setUnknownPlatform] = useState("");
+  const [response, setResponse] = useState(null);
 
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
@@ -38,6 +39,28 @@ function App() {
   const handleInputCommentChange = (e) => {
     const comment = e.target.value;
     setInputComment(comment);
+  };
+
+  const handleSubmit = async () => {
+    const data = {
+      link: activeTab === "link" ? inputLinkValue : null,
+      comment: activeTab === "comment" ? inputComment : null,
+    };
+
+    try {
+      const res = await fetch("http://localhost:5000/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      setResponse(result);
+    } catch (error) {
+      console.error("Error sending data to backend:", error);
+    }
   };
 
   return (
@@ -98,6 +121,7 @@ function App() {
                       : "bg-blue-500 text-white"
                   }`}
                   disabled={!platform}
+                  onClick={handleSubmit}
                 >
                   Submit
                 </button>
@@ -119,12 +143,21 @@ function App() {
                 placeholder="Paste a comment here"
                 onChange={handleInputCommentChange}
               />
-              <button className="border border-black justify-center mx-auto p-2 bg-blue-500 text-white">
+              <button
+                className="border border-black justify-center mx-auto p-2 bg-blue-500 text-white"
+                onClick={handleSubmit}
+              >
                 Submit
               </button>
             </div>
           )}
         </div>
+        {response && (
+          <div className="mt-6 bg-gray-100 p-4 rounded-md">
+            <h3 className="text-xl">Backend Response:</h3>
+            <pre>{JSON.stringify(response, null, 2)}</pre>
+          </div>
+        )}
       </div>
     </div>
   );
