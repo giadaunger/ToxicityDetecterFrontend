@@ -84,15 +84,17 @@ function App() {
         <div className="p-4">
           {activeTab === "link" && (
             <div>
-              <textarea
-                className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Paste a Reddit or Twitter link here"
-                value={inputLinkValue}
-                onChange={handleInputLinkChange}
-              />
-              <button className="border border-black justify-center mx-auto p-2">
-                Submit
-              </button>
+              <div className="flex gap-x-4">
+                <textarea
+                  className="w-full h-11 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-x-auto whitespace-nowrap"
+                  placeholder="Paste a Reddit or Twitter link here"
+                  value={inputLinkValue}
+                  onChange={handleInputLinkChange}
+                />
+                <button className="border border-black justify-center mx-auto p-2 rounded-md">
+                  Submit
+                </button>
+              </div>
               {inputLinkValue && platform && (
                 <p className="mt-2 text-sm text-gray-500">
                   Detected platform: {platform}
