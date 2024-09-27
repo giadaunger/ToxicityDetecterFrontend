@@ -5,6 +5,7 @@ import "./index.css";
 function App() {
   const [activeTab, setActiveTab] = useState("link");
   const [inputLinkValue, setInputLinkValue] = useState("");
+  const [inputComment, setInputComment] = useState("");
   const [platform, setPlatform] = useState("");
   const [unknownPlatform, setUnknownPlatform] = useState("");
 
@@ -18,7 +19,7 @@ function App() {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputLinkChange = (e) => {
     const link = e.target.value;
     setInputLinkValue(link);
 
@@ -34,6 +35,11 @@ function App() {
     }
   };
 
+  const handleInputCommentChange = (e) => {
+    const comment = e.target.value;
+    setInputComment(comment);
+  };
+
   return (
     <div>
       <div className="w-11/12 md:w-1/2 text-center mx-auto pt-10">
@@ -42,9 +48,9 @@ function App() {
           Detect Toxicity Instantly — Know What Hurts, and Why.
         </h2>
         <p className="text-xl">
-          ToxiGuard is an AI-powered tool designed to analyze comments and
-          threads from platforms like Reddit and Twitter to detect toxic
-          content. Simply paste a link or a comment in the textbox, and
+          ToxiGuard i const [in] s an AI-powered tool designed to analyze
+          comments and threads from platforms like Reddit and Twitter to detect
+          toxic content. Simply paste a link or a comment in the textbox, and
           ToxiGuard will identify harmful language and explain why it's
           toxic—helping you foster safer online spaces.
         </p>
@@ -82,8 +88,11 @@ function App() {
                 className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Paste a Reddit or Twitter link here"
                 value={inputLinkValue}
-                onChange={handleInputChange}
+                onChange={handleInputLinkChange}
               />
+              <button className="border border-black justify-center mx-auto p-2">
+                Submit
+              </button>
               {inputLinkValue && platform && (
                 <p className="mt-2 text-sm text-gray-500">
                   Detected platform: {platform}
@@ -95,10 +104,16 @@ function App() {
             </div>
           )}
           {activeTab === "comment" && (
-            <textarea
-              className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Paste a comment here"
-            />
+            <div>
+              <textarea
+                className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Paste a comment here"
+                onChange={handleInputCommentChange}
+              />
+              <button className="border border-black justify-center mx-auto p-2">
+                Submit
+              </button>
+            </div>
           )}
         </div>
       </div>
