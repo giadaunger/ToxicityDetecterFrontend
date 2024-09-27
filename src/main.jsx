@@ -48,9 +48,9 @@ function App() {
           Detect Toxicity Instantly — Know What Hurts, and Why.
         </h2>
         <p className="text-xl">
-          ToxiGuard i const [in] s an AI-powered tool designed to analyze
-          comments and threads from platforms like Reddit and Twitter to detect
-          toxic content. Simply paste a link or a comment in the textbox, and
+          ToxiGuard is an AI-powered tool designed to analyze comments and
+          threads from platforms like Reddit and Twitter to detect toxic
+          content. Simply paste a link or a comment in the textbox, and
           ToxiGuard will identify harmful language and explain why it's
           toxic—helping you foster safer online spaces.
         </p>
@@ -91,7 +91,14 @@ function App() {
                   value={inputLinkValue}
                   onChange={handleInputLinkChange}
                 />
-                <button className="border border-black justify-center mx-auto p-2 rounded-md">
+                <button
+                  className={`border border-black justify-center mx-auto p-2 rounded-md ${
+                    !platform
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-blue-500 text-white"
+                  }`}
+                  disabled={!platform}
+                >
                   Submit
                 </button>
               </div>
@@ -112,7 +119,7 @@ function App() {
                 placeholder="Paste a comment here"
                 onChange={handleInputCommentChange}
               />
-              <button className="border border-black justify-center mx-auto p-2">
+              <button className="border border-black justify-center mx-auto p-2 bg-blue-500 text-white">
                 Submit
               </button>
             </div>
