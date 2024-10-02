@@ -13,7 +13,7 @@ function App() {
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
       return "Reddit";
-    } else if (link.includes("twitter.com")) {
+    } else if (link.includes("x.com")) {
       return "Twitter";
     } else {
       return null;
