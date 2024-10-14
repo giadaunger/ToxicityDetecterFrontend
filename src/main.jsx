@@ -42,13 +42,15 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    const data = {
-      link: activeTab === "link" ? inputLinkValue : null,
-      comment: activeTab === "comment" ? inputComment : null,
-    };
+    let data =
+      activeTab === "link" ? { link: inputLinkValue } : { text: inputComment };
+    const url =
+      activeTab === "link"
+        ? "http://localhost:5000/submit"
+        : "http://localhost:5000/classify";
 
     try {
-      const res = await fetch("http://localhost:5000/submit", {
+      const res = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
