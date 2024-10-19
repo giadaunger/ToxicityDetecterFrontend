@@ -99,7 +99,7 @@ function App() {
     },
     stroke: {
       width: 1,
-      colors: undefined,
+      colors: ["#000"],
     },
     yaxis: {
       show: false,
@@ -107,11 +107,14 @@ function App() {
     plotOptions: {
       polarArea: {
         rings: {
-          strokeWidth: 0,
+          strokeWidth: 1,
+          strokeColor: "#333",
         },
         spokes: {
-          strokeWidth: 1,
+          strokeWidth: 2,
+          strokeColor: "#333",
         },
+        size: "90%",
       },
     },
     colors: ["#FF4560", "#00E396", "#FEB019", "#008FFB", "#775DD0", "#FF66C3"],
@@ -243,7 +246,8 @@ function App() {
               options={chartOptions}
               series={chartSeries}
               type="polarArea"
-              height="350"
+              height="500"
+              width="100%"
             />
           </div>
         )}
