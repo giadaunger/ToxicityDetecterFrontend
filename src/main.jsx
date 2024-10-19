@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import React, { useState } from "react";
+import Chart from "react-apexcharts";
 import { MoonLoader } from "react-spinners";
 import "./index.css";
 
@@ -79,6 +80,53 @@ function App() {
     setUnknownPlatform("");
     setLoading(false);
   };
+
+  // Prepare data for Polar Area Chart
+  const chartOptions = {
+    chart: {
+      type: "polarArea",
+    },
+    labels: [
+      "Toxic",
+      "Severe Toxic",
+      "Obscene",
+      "Threat",
+      "Insult",
+      "Identity Hate",
+    ],
+    fill: {
+      opacity: 1,
+    },
+    stroke: {
+      width: 1,
+      colors: undefined,
+    },
+    yaxis: {
+      show: false,
+    },
+    plotOptions: {
+      polarArea: {
+        rings: {
+          strokeWidth: 0,
+        },
+        spokes: {
+          strokeWidth: 1,
+        },
+      },
+    },
+    colors: ["#FF4560", "#00E396", "#FEB019", "#008FFB", "#775DD0", "#FF66C3"],
+  };
+
+  const chartSeries = response
+    ? [
+        response.toxic * 100,
+        response.severe_toxic * 100,
+        response.obscene * 100,
+        response.threat * 100,
+        response.insult * 100,
+        response.identity_hate * 100,
+      ]
+    : [];
 
   return (
     <div>
@@ -190,8 +238,13 @@ function App() {
 
         {response && activeTab === "comment" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl">Backend Response for Comment:</h3>
-            <pre>{JSON.stringify(response, null, 2)}</pre>
+            <h3 className="text-xl">Toxicity Analysis for Comment:</h3>
+            <Chart
+              options={chartOptions}
+              series={chartSeries}
+              type="polarArea"
+              height="350"
+            />
           </div>
         )}
       </div>
