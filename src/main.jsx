@@ -154,9 +154,18 @@ function App() {
             </div>
           )}
         </div>
-        {response && (
+        {response && activeTab === "link" && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl">Backend Response:</h3>
+            <h3 className="text-xl">Backend Response for Link:</h3>
+            <p>Title: {response.title}</p>
+            <p>Author: {response.author}</p>
+            <pre>{JSON.stringify(response, null, 2)}</pre>
+          </div>
+        )}
+
+        {response && activeTab === "comment" && (
+          <div className="mt-6 bg-gray-100 p-4 rounded-md">
+            <h3 className="text-xl">Backend Response for Comment:</h3>
             <pre>{JSON.stringify(response, null, 2)}</pre>
           </div>
         )}
