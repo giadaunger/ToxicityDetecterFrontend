@@ -71,6 +71,15 @@ function App() {
     }
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setResponse(null);
+    setInputLinkValue("");
+    setInputComment("");
+    setUnknownPlatform("");
+    setLoading(false);
+  };
+
   return (
     <div>
       <div className="w-11/12 md:w-1/2 text-center mx-auto pt-10">
@@ -95,7 +104,7 @@ function App() {
                 ? "border-b-4 border-blue-500 text-blue-500"
                 : "text-gray-600"
             }`}
-            onClick={() => setActiveTab("link")}
+            onClick={() => handleTabChange("link")}
           >
             Link
           </button>
@@ -105,7 +114,7 @@ function App() {
                 ? "border-b-4 border-blue-500 text-blue-500"
                 : "text-gray-600"
             }`}
-            onClick={() => setActiveTab("comment")}
+            onClick={() => handleTabChange("comment")}
           >
             Comment
           </button>
@@ -149,6 +158,7 @@ function App() {
               <textarea
                 className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Paste a comment here"
+                value={inputComment}
                 onChange={handleInputCommentChange}
               />
               <button
