@@ -120,6 +120,18 @@ function App() {
     colors: ["#FF4560", "#00E396", "#FEB019", "#008FFB", "#775DD0", "#FF66C3"],
   };
 
+  const chartSeries =
+    response && response.prediction
+      ? [
+          response.prediction.toxic * 100,
+          response.prediction.severe_toxic * 100,
+          response.prediction.obscene * 100,
+          response.prediction.threat * 100,
+          response.prediction.insult * 100,
+          response.prediction.identity_hate * 100,
+        ]
+      : [];
+
   return (
     <div>
       <div className="w-11/12 md:w-1/2 text-center mx-auto pt-10">
@@ -260,6 +272,12 @@ function App() {
               height="500"
               width="100%"
             />
+          </div>
+        )}
+        {response && response.explanation && (
+          <div className="mt-4 p-4 bg-yellow-100 rounded-md">
+            <h4 className="text-lg font-semibold">Explanation:</h4>
+            <p>{response.explanation}</p>
           </div>
         )}
       </div>
