@@ -243,6 +243,7 @@ function App() {
                     height="350"
                     width="100%"
                   />
+                  <p>{comment.explanation}</p>
                 </div>
               );
             })}
