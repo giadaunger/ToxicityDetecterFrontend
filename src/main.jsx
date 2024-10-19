@@ -81,7 +81,7 @@ function App() {
     setLoading(false);
   };
 
-  // Prepare data for Polar Area Chart
+  // Prepare chart options
   const chartOptions = {
     chart: {
       type: "polarArea",
@@ -119,17 +119,6 @@ function App() {
     },
     colors: ["#FF4560", "#00E396", "#FEB019", "#008FFB", "#775DD0", "#FF66C3"],
   };
-
-  const chartSeries = response
-    ? [
-        response.toxic * 100,
-        response.severe_toxic * 100,
-        response.obscene * 100,
-        response.threat * 100,
-        response.insult * 100,
-        response.identity_hate * 100,
-      ]
-    : [];
 
   return (
     <div>
@@ -232,10 +221,31 @@ function App() {
         {/* Display Results */}
         {response && activeTab === "link" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl">Backend Response for Link:</h3>
-            <p>Title: {response.title}</p>
-            <p>Author: {response.author}</p>
-            <pre>{JSON.stringify(response, null, 2)}</pre>
+            <h3 className="text-xl">Toxicity Analysis for Each Comment:</h3>
+            {response.comments.map((comment, index) => {
+              const commentSeries = [
+                comment.toxicity.toxic * 100,
+                comment.toxicity.severe_toxic * 100,
+                comment.toxicity.obscene * 100,
+                comment.toxicity.threat * 100,
+                comment.toxicity.insult * 100,
+                comment.toxicity.identity_hate * 100,
+              ];
+
+              return (
+                <div key={index} className="mb-6">
+                  <h4>Comment {index + 1}:</h4>
+                  <p>{comment.text}</p>
+                  <Chart
+                    options={chartOptions}
+                    series={commentSeries}
+                    type="polarArea"
+                    height="350"
+                    width="100%"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
 
