@@ -1,5 +1,6 @@
 import { createRoot } from "react-dom/client";
 import React, { useState } from "react";
+import { MoonLoader } from "react-spinners";
 import "./index.css";
 
 function App() {
@@ -9,7 +10,7 @@ function App() {
   const [platform, setPlatform] = useState("");
   const [unknownPlatform, setUnknownPlatform] = useState("");
   const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
@@ -43,8 +44,8 @@ function App() {
   };
 
   const handleSubmit = async () => {
-    setLoading(true); // Set loading to true when the request is started
-    setResponse(null); // Reset response when a new request is sent
+    setLoading(true);
+    setResponse(null);
     let data =
       activeTab === "link" ? { link: inputLinkValue } : { text: inputComment };
     const url =
@@ -62,11 +63,11 @@ function App() {
       });
 
       const result = await res.json();
-      setResponse(result); // Set the response data
-      setLoading(false); // Set loading to false after receiving response
+      setResponse(result);
+      setLoading(false);
     } catch (error) {
       console.error("Error sending data to backend:", error);
-      setLoading(false); // Set loading to false if an error occurs
+      setLoading(false);
     }
   };
 
@@ -162,8 +163,8 @@ function App() {
 
         {/* Display Loading Indicator */}
         {loading && (
-          <div className="mt-6 bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl">Loading...</h3>
+          <div className="mt-6 p-4 flex justify-center">
+            <MoonLoader color="#0066ff" />
           </div>
         )}
 
