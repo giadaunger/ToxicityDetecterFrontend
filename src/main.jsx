@@ -9,6 +9,7 @@ function App() {
   const [platform, setPlatform] = useState("");
   const [unknownPlatform, setUnknownPlatform] = useState("");
   const [response, setResponse] = useState(null);
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
@@ -42,6 +43,8 @@ function App() {
   };
 
   const handleSubmit = async () => {
+    setLoading(true); // Set loading to true when the request is started
+    setResponse(null); // Reset response when a new request is sent
     let data =
       activeTab === "link" ? { link: inputLinkValue } : { text: inputComment };
     const url =
@@ -59,9 +62,11 @@ function App() {
       });
 
       const result = await res.json();
-      setResponse(result);
+      setResponse(result); // Set the response data
+      setLoading(false); // Set loading to false after receiving response
     } catch (error) {
       console.error("Error sending data to backend:", error);
+      setLoading(false); // Set loading to false if an error occurs
     }
   };
 
@@ -154,7 +159,16 @@ function App() {
             </div>
           )}
         </div>
-        {response && activeTab === "link" && (
+
+        {/* Display Loading Indicator */}
+        {loading && (
+          <div className="mt-6 bg-gray-100 p-4 rounded-md">
+            <h3 className="text-xl">Loading...</h3>
+          </div>
+        )}
+
+        {/* Display Results */}
+        {response && activeTab === "link" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
             <h3 className="text-xl">Backend Response for Link:</h3>
             <p>Title: {response.title}</p>
@@ -163,7 +177,7 @@ function App() {
           </div>
         )}
 
-        {response && activeTab === "comment" && (
+        {response && activeTab === "comment" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
             <h3 className="text-xl">Backend Response for Comment:</h3>
             <pre>{JSON.stringify(response, null, 2)}</pre>
