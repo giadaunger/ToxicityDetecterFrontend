@@ -133,8 +133,8 @@ function App() {
       : [];
 
   return (
-    <div>
-      <div className="w-11/12 md:w-1/2 text-center mx-auto pt-10">
+    <div className="w-11/12 mx-auto">
+      <div className="w-2/3 text-center mx-auto pt-10">
         <h1 className="text-5xl pb-4">ToxiGuard</h1>
         <h2 className="text-2xl pb-8">
           Detect Toxicity Instantly — Know What Hurts, and Why.
@@ -147,9 +147,9 @@ function App() {
           toxic—helping you foster safer online spaces.
         </p>
       </div>
-      <div className="max-w-lg mx-auto mt-10">
+      <div className="mx-auto mt-10 w-2/3">
         {/* Top bar with tabs */}
-        <div className="flex border-b border-gray-300">
+        <div className="w-1/2 mx-auto flex border-b border-gray-300">
           <button
             className={`flex-1 py-2 text-center ${
               activeTab === "link"
@@ -176,18 +176,18 @@ function App() {
         <div className="p-4">
           {activeTab === "link" && (
             <div>
-              <div className="flex gap-x-4">
+              <div className="flex justify-center space-x-4">
                 <textarea
-                  className="w-full h-11 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-x-auto whitespace-nowrap"
+                  className="w-[43%] h-11 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 overflow-x-auto whitespace-nowrap"
                   placeholder="Paste a Reddit or Twitter link here"
                   value={inputLinkValue}
                   onChange={handleInputLinkChange}
                 />
                 <button
-                  className={`border border-black justify-center mx-auto p-2 rounded-md ${
+                  className={`border border-black p-2 rounded-md ${
                     !platform
-                      ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-blue-500 text-white"
+                      ? "border-[#6494ed7d] bg-[#6494ed7d] text-[#0000007d] cursor-not-allowed"
+                      : "flex rounded-md border border-[#6495ED] justify-center mx-auto p-2 bg-[#6495ED] text-white shadow-md transition duration-300 hover:scale-125 hover:bg-[#bde1ed] hover:border-[#71bfd9]"
                   }`}
                   disabled={!platform}
                   onClick={handleSubmit}
@@ -196,7 +196,7 @@ function App() {
                 </button>
               </div>
               {inputLinkValue && platform && (
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-500 w-1/2 mx-auto">
                   Detected platform: {platform}
                 </p>
               )}
@@ -208,13 +208,13 @@ function App() {
           {activeTab === "comment" && (
             <div>
               <textarea
-                className="w-full h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-1/2 mx-auto flex h-40 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Paste a comment here"
                 value={inputComment}
                 onChange={handleInputCommentChange}
               />
               <button
-                className="border border-black justify-center mx-auto p-2 bg-blue-500 text-white"
+                className="mt-8 flex w-1/3 rounded-md border border-[#6495ED] justify-center mx-auto p-2 bg-[#6495ED] text-white shadow-md transition duration-300 hover:scale-125 hover:bg-[#bde1ed] hover:border-[#71bfd9]"
                 onClick={handleSubmit}
               >
                 Submit
@@ -263,8 +263,10 @@ function App() {
         )}
 
         {response && activeTab === "comment" && !loading && (
-          <div className="mt-6 bg-gray-100 p-4 rounded-md">
-            <h3 className="text-xl">Toxicity Analysis for Comment:</h3>
+          <div className="mt-6 bg-gray-100 p-4 rounded-md shadow-md">
+            <h3 className="text-xl font-semibold">
+              Toxicity Analysis for Comment:
+            </h3>
             <Chart
               options={chartOptions}
               series={chartSeries}
@@ -275,8 +277,8 @@ function App() {
           </div>
         )}
         {response && response.explanation && (
-          <div className="mt-4 p-4 bg-yellow-100 rounded-md">
-            <h4 className="text-lg font-semibold">Explanation:</h4>
+          <div className="mt-4 p-4 bg-gray-100 rounded-md mb-20 shadow-md">
+            <h4 className="text-xl font-semibold mb-4">Explanation:</h4>
             <p>{response.explanation}</p>
           </div>
         )}
