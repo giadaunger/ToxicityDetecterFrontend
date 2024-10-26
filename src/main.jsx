@@ -234,33 +234,38 @@ function App() {
         {response && activeTab === "link" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md">
             <h3 className="text-xl">Toxicity Analysis for Each Comment:</h3>
-            {response.comments.map((comment, index) => {
-              const commentSeries = [
-                comment.toxicity.toxic * 100,
-                comment.toxicity.severe_toxic * 100,
-                comment.toxicity.obscene * 100,
-                comment.toxicity.threat * 100,
-                comment.toxicity.insult * 100,
-                comment.toxicity.identity_hate * 100,
-              ];
+            {response.comments && response.comments.length > 0 ? (
+              response.comments.map((comment, index) => {
+                const commentSeries = [
+                  comment.toxicity.toxic * 100,
+                  comment.toxicity.severe_toxic * 100,
+                  comment.toxicity.obscene * 100,
+                  comment.toxicity.threat * 100,
+                  comment.toxicity.insult * 100,
+                  comment.toxicity.identity_hate * 100,
+                ];
 
-              return (
-                <div key={index} className="mb-6">
-                  <h4>Comment {index + 1}:</h4>
-                  <p>{comment.text}</p>
-                  <Chart
-                    options={chartOptions}
-                    series={commentSeries}
-                    type="polarArea"
-                    height="350"
-                    width="100%"
-                  />
-                  <p>{comment.explanation}</p>
-                </div>
-              );
-            })}
+                return (
+                  <div key={index} className="mb-6">
+                    <h4>Comment {index + 1}:</h4>
+                    <p>{comment.text}</p>
+                    <Chart
+                      options={chartOptions}
+                      series={commentSeries}
+                      type="polarArea"
+                      height="350"
+                      width="100%"
+                    />
+                    <p>{comment.explanation}</p>
+                  </div>
+                );
+              })
+            ) : (
+              <p>No comments found or analyzed in this thread.</p>
+            )}
           </div>
         )}
+
 
         {response && activeTab === "comment" && !loading && (
           <div className="mt-6 bg-gray-100 p-4 rounded-md shadow-md">
