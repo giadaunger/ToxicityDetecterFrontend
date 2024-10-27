@@ -16,8 +16,8 @@ function App() {
   const detectPlatform = (link) => {
     if (link.includes("reddit.com")) {
       return "Reddit";
-    } else if (link.includes("x.com")) {
-      return "Twitter";
+/*     } else if (link.includes("x.com")) {
+      return "Twitter"; */
     } else {
       return null;
     }
@@ -34,7 +34,7 @@ function App() {
     } else {
       setPlatform("");
       setUnknownPlatform(
-        "Can only accept links from Reddit or Twitter threads!"
+        "Can only accept links from Reddit threads!"
       );
     }
   };
@@ -141,7 +141,7 @@ function App() {
         </h2>
         <p className="text-xl">
           ToxiGuard is an AI-powered tool designed to analyze comments and
-          threads from platforms like Reddit and Twitter to detect toxic
+          threads from Reddit to detect toxic
           content. Simply paste a link or a comment in the textbox, and
           ToxiGuard will identify harmful language and explain why it's
           toxic—helping you foster safer online spaces.
@@ -201,7 +201,7 @@ function App() {
                 </p>
               )}
               {unknownPlatform && (
-                <p className="mt-2 text-sm text-red-500">{unknownPlatform}</p>
+                <p className="mt-2 text-sm w-1/2 mx-auto text-red-500">{unknownPlatform}</p>
               )}
             </div>
           )}
