@@ -225,8 +225,9 @@ function App() {
 
         {/* Display Loading Indicator */}
         {loading && (
-          <div className="mt-6 p-4 flex justify-center">
-            <MoonLoader color="#0066ff" />
+          <div className="mt-6 p-4 flex-inlin justify-center">
+            <p className="text-center mb-8 w-1/2 mx-auto p-4 bg-gray-100 rounded">It can take a couple of minutes, depending och the thread size.</p>
+            <MoonLoader color="#0066ff" className="mx-auto" />
           </div>
         )}
 
